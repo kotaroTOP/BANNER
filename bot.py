@@ -1,8 +1,6 @@
 import telebot # библиотека telebot
 from config import token # импорт токена
-
 bot = telebot.TeleBot(token) 
-
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Привет! Я бот для управления чатом.")
@@ -23,10 +21,13 @@ def ban_user(message):
     else:
         bot.reply_to(message, "Эта команда должна быть использована в ответ на сообщение пользователя, которого вы хотите забанить.")
 
-@bot.message_handler(func=lambda message: True)
+@bot.message_handler(commands=['echomode'],func=lambda message: True)
 def echo_message(message):
     bot.reply_to(message, message.text) 
-
+    bot.reply_to(message, "Эхо мод включен! Чтобы отключить напиши '/stopechomode'")
+    @bot.message_handler(commands=['echomode'],func=lambda message: False)
+    def normal_message(message):
+       bot.send_message('эхо мод выключен!') 
 @bot.message_handler(content_types=['new_chat_members'])
 def make_some(message):
     bot.send_message(message.chat.id, 'Кто то зашел! C=D')
