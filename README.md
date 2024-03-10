@@ -1,2 +1,2 @@
 '#banner'
-'i can ban owner =D'
+'i can't ban owner D='
